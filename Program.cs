@@ -6,7 +6,7 @@ namespace TopicosAvancados
     {
         static void Main(string[] args)
         {
-            Arquivo.LerArquivo(@"C:\Users\danie\OneDrive\Imagens\OutrosTextos\textoPasta.txt");
+            Arquivo.Escrever(@"C:\Users\danie\OneDrive\Imagens\OutrosTextos\textoPasta.txt");
         }
     }
 
@@ -161,9 +161,27 @@ namespace TopicosAvancados
             Directory.Delete(diretorio); // Deleta o caminho do diretório
         }
 
-        public static void LerArquivo(string arquivo)
+        public static void LeituraArquivoSimples(string arquivo)
         {
             Console.WriteLine(File.ReadAllText(arquivo)); // Lê o arquivo
+        }
+
+        public static void LeituraArquivoArray(string caminho)
+        {
+            string[] linhas = File.ReadAllLines(caminho); // Armazena cada linha em um array
+
+            foreach (string linha in linhas)
+            {
+                Console.WriteLine(linha); // Exibe as linhas
+            }
+        }
+
+        public static void Escrever(string caminho)
+        {
+            using (StreamWriter escritor = new StreamWriter(caminho))
+            {
+                escritor.WriteLine("Olá, Mundo!"); // Escrevendo com StreamWriter
+            }
         }
     }
 }

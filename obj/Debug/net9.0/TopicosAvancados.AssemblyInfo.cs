@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TopicosAvancados")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ddaab3306892c5d0ec55390ca6ae29197be29d13")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b21a3ce326aef206205a5f4a9e0e00934727da0f")]
 [assembly: System.Reflection.AssemblyProductAttribute("TopicosAvancados")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TopicosAvancados")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
