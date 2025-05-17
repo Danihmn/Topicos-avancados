@@ -6,50 +6,7 @@ namespace TopicosAvancados
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Trabalhando com o SO");
-            SistemaOperacional.ExibirSO(); // Exibe o sistema operacional
-            SistemaOperacional.ExibirTipoSO(); // Exibe o tipo do sistema operacional
-
-            Console.WriteLine("========================================================");
-
-            Console.WriteLine("Trabalhando com arquivos e diretórios");
-
-            // Exibe os diretórios
-            Arquivo.ExibirDiretorios(@"C:\Users\danie\Downloads");
-
-            // Exibe os arquivos
-            Arquivo.ExibirArquivos(@"C:\Users\danie\OneDrive\Documentos\Arquivos PDF\Documentos pessoais");
-
-            // Exibe o tamanho dos arquivos
-            Arquivo.ExibirTamanhoArquivo(@"C:\Users\danie\OneDrive\Documentos\Arquivos PDF\Documentos pessoais");
-
-            // Verifica se o caminho existe
-            bool existencia = Arquivo.VerificarExistencia(@"C:\Users\danie\OneDrive\Documentos\Arquivos PDF\Documentos pessoais");
-            Console.WriteLine(existencia == false ? "O caminho não existe" : "O caminho existe"); // Escreve a existência
-
-            // Cria novo diretório
-            Arquivo.CriarDiretorio(@"C:\Users\danie\OneDrive\Documentos\Arquivos PDF\ArquivosCriadosDeProgramas");
-
-            // Cria novo arquivo
-            Arquivo.CriarArquivo(@"C:\Users\danie\OneDrive\Documentos\Arquivos PDF\ArquivosCriadosDeProgramas\Texto.txt");
-
-            // Copia arquivo
-            Arquivo.CopiarArquivo(
-                @"C:\Users\danie\OneDrive\Documentos\Arquivos PDF\ArquivosCriadosDeProgramas\Texto.txt",
-                @"C:\Users\danie\OneDrive\Documentos\Arquivos PDF\ArquivosCriadosDeProgramas\Cópia.txt"
-                ); // Ele não move o arquivo, apenas copia, ou seja, duplica
-
-            // Move o arquivo
-            Arquivo.MoverArquivo(
-                @"C:\Users\danie\OneDrive\Documentos\Arquivos PDF\ArquivosCriadosDeProgramas\Texto.txt",
-                @"C:\Users\danie\OneDrive\Documentos\Arquivos PDF\ArquivosCopiados\Texto.txt"
-                ); // Ele move o arquivo, passa de uma pasta para outra
-
-            // Deleta o arquivo
-            Arquivo.DeletarArquivo(@"C:\Users\danie\OneDrive\Documentos\Arquivos PDF\ArquivosCopiados\Texto.txt");
-
-            // Deleta o diretório
-            Arquivo.DeletarDiretorio(@"C:\Users\danie\OneDrive\Documentos\Arquivos PDF\ArquivosCopiados");
+            Arquivo.LerArquivo(@"C:\Users\danie\OneDrive\Imagens\OutrosTextos\textoPasta.txt");
         }
     }
 
@@ -145,9 +102,20 @@ namespace TopicosAvancados
 
         public static void CriarArquivo(string arquivo)
         {
-            if (!File.Exists(arquivo))
+            if (Directory.Exists(Path.GetDirectoryName(arquivo)))
             {
-                File.Create(arquivo); // Cria um arquivo
+                if (!File.Exists(arquivo))
+                {
+                    File.Create(arquivo); // Cria um arquivo
+                }
+                else
+                {
+                    throw new Exception("O arquivo já existe");
+                }
+            }
+            else
+            {
+                throw new Exception("O diretório para criar o arquivo não existe");
             }
         }
 
@@ -157,13 +125,29 @@ namespace TopicosAvancados
             {
                 File.Copy(origem, destino); // Copia o arquivo e cola no destino
             }
+            else
+            {
+                throw new Exception("Não foi possível copiar o arquivo");
+            }
         }
 
-        public static void MoverArquivo(string origem, string destino)
+        public static void MoverApenasArquivos(string origem, string destino)
         {
-            if (File.Exists(origem) && !File.Exists(destino))
+            try
             {
-                File.Move(origem, destino); // Move o arquivo para o destino
+                // Pega todos os arquivos do caminho especificado
+                var arquivos = Directory.GetFiles(origem, "*.*", SearchOption.AllDirectories);
+
+                foreach (var arquivo in arquivos)
+                {
+                    // Combina o nome do caminho do destino com o nome do arquivo
+                    string novoCaminho = Path.Combine(destino, Path.GetFileName(arquivo));
+                    File.Move(arquivo, novoCaminho);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -175,6 +159,11 @@ namespace TopicosAvancados
         public static void DeletarDiretorio(string diretorio)
         {
             Directory.Delete(diretorio); // Deleta o caminho do diretório
+        }
+
+        public static void LerArquivo(string arquivo)
+        {
+            Console.WriteLine(File.ReadAllText(arquivo)); // Lê o arquivo
         }
     }
 }
