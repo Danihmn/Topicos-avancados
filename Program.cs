@@ -6,7 +6,7 @@ namespace TopicosAvancados
     {
         static void Main(string[] args)
         {
-            Arquivo.LeituraArquivo(@"C:\Users\danie\OneDrive\Documentos\Arquivos PDF\ArquivosCriadosDeProgramas\Texto.txt");
+            Console.WriteLine("Programa para fins didáticos");
         }
     }
 
@@ -163,6 +163,7 @@ namespace TopicosAvancados
 
         public static void LeituraArquivo(string caminho)
         {
+            // using Fecha o arquivo automaticamente
             using (StreamReader leitor = new StreamReader(caminho))
             {
                 string? linha;
@@ -176,15 +177,11 @@ namespace TopicosAvancados
 
         public static void Escrever(string caminho)
         {
+            // using Fecha o arquivo automaticamente
             using (StreamWriter escritor = new StreamWriter(caminho))
             {
                 escritor.WriteLine("Olá, Mundo!"); // Escrevendo com StreamWriter
             } // O arquivo é fechado automaticamente
         }
-    }
-
-    class Threadings
-    {
-
     }
 }
