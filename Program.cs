@@ -26,6 +26,30 @@ namespace TopicosAvancados
             // Verifica se o caminho existe
             bool existencia = Arquivo.VerificarExistencia(@"C:\Users\danie\OneDrive\Documentos\Arquivos PDF\Documentos pessoais");
             Console.WriteLine(existencia == false ? "O caminho não existe" : "O caminho existe"); // Escreve a existência
+
+            // Cria novo diretório
+            Arquivo.CriarDiretorio(@"C:\Users\danie\OneDrive\Documentos\Arquivos PDF\ArquivosCriadosDeProgramas");
+
+            // Cria novo arquivo
+            Arquivo.CriarArquivo(@"C:\Users\danie\OneDrive\Documentos\Arquivos PDF\ArquivosCriadosDeProgramas\Texto.txt");
+
+            // Copia arquivo
+            Arquivo.CopiarArquivo(
+                @"C:\Users\danie\OneDrive\Documentos\Arquivos PDF\ArquivosCriadosDeProgramas\Texto.txt",
+                @"C:\Users\danie\OneDrive\Documentos\Arquivos PDF\ArquivosCriadosDeProgramas\Cópia.txt"
+                ); // Ele não move o arquivo, apenas copia, ou seja, duplica
+
+            // Move o arquivo
+            Arquivo.MoverArquivo(
+                @"C:\Users\danie\OneDrive\Documentos\Arquivos PDF\ArquivosCriadosDeProgramas\Texto.txt",
+                @"C:\Users\danie\OneDrive\Documentos\Arquivos PDF\ArquivosCopiados\Texto.txt"
+                ); // Ele move o arquivo, passa de uma pasta para outra
+
+            // Deleta o arquivo
+            Arquivo.DeletarArquivo(@"C:\Users\danie\OneDrive\Documentos\Arquivos PDF\ArquivosCopiados\Texto.txt");
+
+            // Deleta o diretório
+            Arquivo.DeletarDiretorio(@"C:\Users\danie\OneDrive\Documentos\Arquivos PDF\ArquivosCopiados");
         }
     }
 
@@ -109,6 +133,48 @@ namespace TopicosAvancados
         {
             bool existencia = Directory.Exists(caminho); // Verifica se o caminho existe
             return existencia;
+        }
+
+        public static void CriarDiretorio(string local)
+        {
+            if (!Directory.Exists(local))
+            {
+                Directory.CreateDirectory(local); // Cria um diretório no caminho especificado
+            }
+        }
+
+        public static void CriarArquivo(string arquivo)
+        {
+            if (!File.Exists(arquivo))
+            {
+                File.Create(arquivo); // Cria um arquivo
+            }
+        }
+
+        public static void CopiarArquivo(string origem, string destino)
+        {
+            if (File.Exists(origem) && !File.Exists(destino))
+            {
+                File.Copy(origem, destino); // Copia o arquivo e cola no destino
+            }
+        }
+
+        public static void MoverArquivo(string origem, string destino)
+        {
+            if (File.Exists(origem) && !File.Exists(destino))
+            {
+                File.Move(origem, destino); // Move o arquivo para o destino
+            }
+        }
+
+        public static void DeletarArquivo(string arquivo)
+        {
+            File.Delete(arquivo); // Deleta o caminho do arquivo
+        }
+
+        public static void DeletarDiretorio(string diretorio)
+        {
+            Directory.Delete(diretorio); // Deleta o caminho do diretório
         }
     }
 }
